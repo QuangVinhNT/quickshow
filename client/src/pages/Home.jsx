@@ -1,9 +1,10 @@
-import HeroSection from "../components/HeroSection";
+import { FeatureSection, HeroSection } from "../components";
 
 const Home = () => {
 	return (
 		<>
 			<HeroSection />
+			<FeatureSection />
 		</>
 	);
 };
