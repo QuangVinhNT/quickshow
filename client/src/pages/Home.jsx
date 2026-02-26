@@ -1,8 +1,13 @@
+import { FeatureSection, HeroSection, TrailersSection } from "../components";
 
 const Home = () => {
-  return (
-    <div></div>
-  )
-}
+	return (
+		<>
+			<HeroSection />
+			<FeatureSection />
+			<TrailersSection />
+		</>
+	);
+};
 
-export default Home
+export default Home;
