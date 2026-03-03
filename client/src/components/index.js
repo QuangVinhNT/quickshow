@@ -7,6 +7,8 @@ import MovieCard from "./MovieCard";
 import BlurCircle from "./BlurCircle";
 import DateSelect from "./DateSelect";
 import Loading from "./Loading";
+import AdminSidebar from './admin/AdminSidebar'
+import AdminNavBar from './admin/AdminNavBar'
 export {
 	Footer,
 	NavBar,
@@ -16,5 +18,7 @@ export {
 	MovieCard,
 	BlurCircle,
 	DateSelect,
-  Loading
+  Loading,
+	AdminSidebar,
+	AdminNavBar
 };

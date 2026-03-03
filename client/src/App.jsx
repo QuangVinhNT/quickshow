@@ -1,8 +1,13 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Footer, NavBar } from "./components";
 import {
+	AddShows,
+	Dashboard,
 	Favourite,
 	Home,
+	Layout,
+	ListBookings,
+	ListShows,
 	MovieDetails,
 	Movies,
 	MyBookings,
@@ -42,6 +47,12 @@ const App = () => {
 					path="/favourite"
 					element={<Favourite />}
 				/>
+				<Route path="/admin/*" element={<Layout/>}>
+					<Route index element={<Dashboard />}/>
+					<Route path="add-shows" element={<AddShows />}/>
+					<Route path="list-shows" element={<ListShows />}/>
+					<Route path="list-bookings" element={<ListBookings />}/>
+				</Route>
 			</Routes>
 			{!isAdminRoute && <Footer />}
 		</>
