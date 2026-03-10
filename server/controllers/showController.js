@@ -1,6 +1,6 @@
 import axios from "axios";
-import Movie from "../models/Movie";
-import Show from "../models/Show";
+import Movie from "../models/Movie.js";
+import Show from "../models/Show.js";
 
 export const getNowPlayingMovies = async (req, res) => {
 	try {
