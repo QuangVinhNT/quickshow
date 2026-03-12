@@ -1,5 +1,6 @@
 import stripe from "stripe";
 import Booking from "../models/Booking.js";
+import { inngest } from "../inngest/index.js";
 
 export const stripeWebhooks = async (req, res) => {
 	const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
@@ -17,20 +18,23 @@ export const stripeWebhooks = async (req, res) => {
 
 	try {
 		switch (event.type) {
-			case "payment_intent.succeeded":
-				{
-					const paymentIntent = event.data.object;
-					const sessionList = await stripeInstance.checkout.sessions.list({
-						payment_intent: paymentIntent.id,
-					});
-					const session = sessionList.data[0];
-					const { bookingId } = session.metadata;
-					await Booking.findByIdAndUpdate(bookingId, {
-						isPaid: true,
-						paymentLink: "",
-					});
-				}
+			case "payment_intent.succeeded": {
+				const paymentIntent = event.data.object;
+				const sessionList = await stripeInstance.checkout.sessions.list({
+					payment_intent: paymentIntent.id,
+				});
+				const session = sessionList.data[0];
+				const { bookingId } = session.metadata;
+				await Booking.findByIdAndUpdate(bookingId, {
+					isPaid: true,
+					paymentLink: "",
+				});
+				await inngest.send({
+					name: "app/show.booded",
+					data: { bookingId },
+				});
 				break;
+			}
 
 			default:
 				console.log("Unhandle event type:", event.type);
