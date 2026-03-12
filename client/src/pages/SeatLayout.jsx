@@ -1,7 +1,7 @@
 import { ArrowRightIcon, ClockIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { BlurCircle, Loading } from "../components";
 import { useAppContext } from "../context/AppContext";
@@ -20,7 +20,6 @@ const SeatLayout = () => {
 	const [selectedTime, setSelectedTime] = useState(null);
 	const [show, setShow] = useState(null);
 	const [occupiedSeats, setOccupiedSeats] = useState([]);
-	const navigate = useNavigate();
 	const { axios, getToken, user } = useAppContext();
 	const getShow = async () => {
 		try {
@@ -100,10 +99,9 @@ const SeatLayout = () => {
 				{ headers: { Authorization: `Bearer ${await getToken()}` } },
 			);
 			if (data.success) {
-				toast.success(data.message);
-				navigate("/my-bookings");
+				window.location.href = data.url;
 			} else {
-				toast.error(data.message)
+				toast.error(data.message);
 			}
 		} catch (error) {
 			toast.error(error.message);
