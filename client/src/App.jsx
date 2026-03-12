@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Footer, NavBar } from "./components";
+import { Footer, Loading, NavBar } from "./components";
 import {
 	AddShows,
 	Dashboard,
@@ -44,6 +44,10 @@ const App = () => {
 				<Route
 					path="/my-bookings"
 					element={<MyBookings />}
+				/>
+				<Route
+					path="/loading/:nextUrl"
+					element={<Loading />}
 				/>
 				<Route
 					path="/favourite"
