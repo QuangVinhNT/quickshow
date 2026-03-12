@@ -6,11 +6,13 @@ import {
 	UsersIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { dummyDashboardData } from "../../assets/assets";
+import toast from "react-hot-toast";
 import { BlurCircle, Loading, Title } from "../../components";
+import { useAppContext } from "../../context/AppContext";
 import { dateFormat } from "../../lib";
 
 const Dashboard = () => {
+	const { axios, getToken, user, image_base_url } = useAppContext();
 	const currency = import.meta.env.VITE_CURRENCY;
 	const [dashboardData, setDashboardData] = useState({
 		totalBookings: 0,
@@ -42,13 +44,33 @@ const Dashboard = () => {
 		},
 	];
 
-	useEffect(() => {
-		const fetchDashboardData = async () => {
-			setDashboardData(dummyDashboardData);
+	const fetchDashboardData = async () => {
+		try {
+			const { data } = await axios.get("/api/admin/dashboard", {
+				headers: {
+					Authorization: `Bearer ${await getToken()}`,
+				},
+			});
+			if (data.success) {
+				setDashboardData(data.dashboardData);
+			} else {
+				toast.error(data.message);
+			}
+		} catch (error) {
+			toast.error("Error fetching dashboard data:", error);
+		} finally {
 			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		const loadData = async () => {
+			await fetchDashboardData();
 		};
-		fetchDashboardData();
-	}, []);
+		if (user) {
+			loadData();
+		}
+	}, [user]);
 	return !loading ? (
 		<>
 			<Title
@@ -87,7 +109,7 @@ const Dashboard = () => {
 						className="w-55 rounded-lg overflow-hidden h-full pb-3 bg-primary/10 border border-primary/20 hover:-translate-y-1 transition duration-300"
 					>
 						<img
-							src={show.movie.poster_path}
+							src={image_base_url + show.movie.poster_path}
 							alt=""
 							className="h-60 w-full object-cover"
 						/>
