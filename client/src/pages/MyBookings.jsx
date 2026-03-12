@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BlurCircle, Loading } from "../components";
 import { useAppContext } from "../context/AppContext";
 import { dateFormat, timeFormat } from "../lib";
+import { Link } from "react-router-dom";
 
 const MyBookings = () => {
 	const { axios, getToken, user, image_base_url } = useAppContext();
@@ -73,9 +74,9 @@ const MyBookings = () => {
 								{item.amount}
 							</p>
 							{!item.isPaid && (
-								<button className="bg-primary px-4 py-1.5 mb-3 text-sm rounded-full font-medium cursor-pointer">
+								<Link to={item.paymentLink} className="bg-primary px-4 py-1.5 mb-3 text-sm rounded-full font-medium cursor-pointer">
 									Pay Now
-								</button>
+								</Link>
 							)}
 						</div>
 						<div className="text-sm">
