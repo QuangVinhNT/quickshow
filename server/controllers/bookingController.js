@@ -41,7 +41,7 @@ export const createBooking = async (req, res) => {
 		showData.markModified("occupiedSeats");
 		await showData.save();
 		// Stripe
-		const stripeInstance = new stripe(procecss.env.STRIPE_SECRET_KEY);
+		const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
 		const line_items = [
 			{
 				price_data: {
