@@ -8,7 +8,7 @@ const Loading = () => {
 		if (nextUrl) {
 			setTimeout(() => {
 				navigate("/" + nextUrl);
-			}, 1000);
+			}, 8000);
 		}
 	}, []);
 	return (
